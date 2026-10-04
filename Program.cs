@@ -25,11 +25,12 @@ builder.Services.AddScoped<IExpenseService, ExpenseService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+app.UseSwagger();
+app.UseSwaggerUI(c =>
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Tricount API v1");
+    c.RoutePrefix = string.Empty; // Serves Swagger UI at app root
+});
 
 app.UseHttpsRedirection();
 app.MapControllers();
